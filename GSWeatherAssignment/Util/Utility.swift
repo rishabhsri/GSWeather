@@ -1,5 +1,6 @@
 //
-//  ComvivaFoodApp
+//  Utility.swift
+//  GSWeatherAssignment
 //
 //  Created by Rishabh on 02/04/21.
 //

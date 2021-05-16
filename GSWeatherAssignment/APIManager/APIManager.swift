@@ -15,7 +15,8 @@ struct APIManager {
     // MARK: - General Methods
     private func weatherAPIURL(_ cityName: String) -> URL {
         let weatherInfoUrl =  baseURLString + "\(cityName)&APPID=\(apiKey)"
-        guard let finalURL = URL(string: weatherInfoUrl) else {
+        
+        guard let url = weatherInfoUrl.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed), let finalURL = URL(string: url) else {
             fatalError("URL must be created!")
         }
         return finalURL

@@ -9,7 +9,7 @@ import UIKit
 
 class WeatherTableViewController: UITableViewController {
         
-    var weatherListViewModel: WeatherListViewModel?
+    private var weatherListViewModel: WeatherListViewModel?
     weak var weatherDelegate: WeatherSelectionProtocol?
     private var weatherCellReuseIdentifier = "weatherTableViewCell"
 

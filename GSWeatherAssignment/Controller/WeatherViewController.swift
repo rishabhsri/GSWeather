@@ -24,7 +24,7 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var searchWeatherLabel: UILabel!
     @IBOutlet weak var parentView: UIView!
     
-    var weatherViewModel = WeatherViewModel()
+    private var weatherViewModel = WeatherViewModel()
     private var showWeatherSegue = "showFavDestinations"
     
     override func viewDidLoad() {
@@ -59,7 +59,7 @@ extension WeatherViewController: UITextFieldDelegate {
         if ReachabilityTest.isConnectedToNetwork() {
             weatherViewModel.getWeatherDetailsForCity(for: city, completion: {[weak self] (weatherInfo) in
                 if weatherInfo == nil {
-                    Utility.showAlert(message: "City not found. Please insure the right name.", on: self ?? UIViewController())
+                    Utility.showAlert(message: "City not found. Please ensure the right name.", on: self ?? UIViewController())
                     completion?(false)
                 } else {
                     self?.populateData(weather: weatherInfo)
@@ -68,7 +68,7 @@ extension WeatherViewController: UITextFieldDelegate {
                 }
             })
         } else {
-            Utility.showAlert(message: "Insure you have the internet connectivity.", on: self)
+            Utility.showAlert(message: "Ensure you have internet connectivity.", on: self)
             completion?(false)
         }
     }
@@ -103,10 +103,13 @@ extension WeatherViewController: WeatherSelectionProtocol {
     func citySelected(model: WeatherModel) {
         if ReachabilityTest.isConnectedToNetwork() {    // Check if internet is available...
             self.getWeatherInfo(for: model.cityName ?? "", completion: {success in
-                self.markFavouriteAction(AnyClass.self) // Update the the information in local...
+                if success {
+                    self.markFavouriteAction(AnyClass.self) // Update the the information in local...
+                }
             })
         } else {
             populateData(weather: model)
+            weatherViewModel.weatherInfo = model
         }
     }
 }

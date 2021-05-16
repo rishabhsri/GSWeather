@@ -19,32 +19,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BAA8EC5F-3282-4701-9945-A5AE7BA6F2B0"
+            uuid = "B84EC4AF-24F0-4831-8BE7-F463D72FC3C8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "GSWeatherAssignment/DataModel/WeatherInfo+Model.swift"
+            filePath = "GSWeatherAssignment/Util/Utility.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "15"
-            endingLineNumber = "15"
-            landmarkName = "insertWeatherInfo(_:context:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "43C7E121-78E5-4F1A-BB65-5CDF9F76ADE9"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "GSWeatherAssignment/Controller/WeatherViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "104"
-            endingLineNumber = "104"
-            landmarkName = "citySelected(model:)"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "getDateFromDouble(doubleDate:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
