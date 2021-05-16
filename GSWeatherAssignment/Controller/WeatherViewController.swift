@@ -24,16 +24,12 @@ class WeatherViewController: UIViewController {
     @IBOutlet weak var searchWeatherLabel: UILabel!
     @IBOutlet weak var parentView: UIView!
     
-    private var weatherViewModel = WeatherViewModel()
-    private var showWeatherSegue = "showFavDestinations"
+    private let weatherViewModel = WeatherViewModel()
+    private let showWeatherSegue = "showFavDestinations"
     
     override func viewDidLoad() {
         super.viewDidLoad()
         searchBar.searchTextField.delegate = self
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
     }
     
     // In a storyboard-based application, you will often want to do a little preparation before navigation
@@ -44,9 +40,8 @@ class WeatherViewController: UIViewController {
     }
 }
 
-//Mark:- IBActions
+// Mark:- Extension to conform UITextFieldDelegate and implement utilities methods
 extension WeatherViewController: UITextFieldDelegate {
-    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         if let count = textField.text?.count, count > 2 {
@@ -58,13 +53,14 @@ extension WeatherViewController: UITextFieldDelegate {
     private func getWeatherInfo(for city: String, completion: ((Bool) -> Void)? = nil) {
         if ReachabilityTest.isConnectedToNetwork() {
             weatherViewModel.getWeatherDetailsForCity(for: city, completion: {[weak self] (weatherInfo) in
-                if weatherInfo == nil {
-                    Utility.showAlert(message: "City not found. Please ensure the right name.", on: self ?? UIViewController())
-                    completion?(false)
-                } else {
-                    self?.populateData(weather: weatherInfo)
-                    self?.searchBar.searchTextField.text = ""
+                guard let self = self else { return }
+                if let weatherDetail = weatherInfo {
+                    self.populateData(weatherInfo: weatherDetail)
+                    self.searchBar.searchTextField.text = ""
                     completion?(true)
+                } else {
+                    Utility.showAlert(message: "City not found. Please ensure the right name.", on: self)
+                    completion?(false)
                 }
             })
         } else {
@@ -73,43 +69,44 @@ extension WeatherViewController: UITextFieldDelegate {
         }
     }
     
-    private func populateData(weather: WeatherModel?) {
-        if let weatherInfo = weather {
-            self.searchWeatherLabel.isHidden = true
-            self.parentView.isHidden = false
-            self.cityNameLabel.text = weatherInfo.cityName
-            self.tempLabel.text = weather?.temperature
-            self.humidityLabel.text = weatherInfo.humidity
-            self.visibilityLabel.text = weatherInfo.visibility
-            self.windSpeedLabel.text = weatherInfo.windSpeed
-            self.sunriseLabel.text = weatherInfo.sunrise
-            self.sunsetLabel.text = weatherInfo.sunset
-        }
+    private func populateData(weatherInfo: WeatherModel) {
+        self.searchWeatherLabel.isHidden = true
+        self.parentView.isHidden = false
+        self.cityNameLabel.text = weatherInfo.cityName
+        self.tempLabel.text = weatherInfo.temperature
+        self.humidityLabel.text = weatherInfo.humidity
+        self.visibilityLabel.text = weatherInfo.visibility
+        self.windSpeedLabel.text = weatherInfo.windSpeed
+        self.sunriseLabel.text = weatherInfo.sunrise
+        self.sunsetLabel.text = weatherInfo.sunset
     }
+}
+
+// Mark:- Extension to implement IBActions
+extension WeatherViewController {
     
     @IBAction func showFavourite(_ sender: Any) {
         self.performSegue(withIdentifier: showWeatherSegue, sender: nil)
     }
     
     @IBAction func markFavouriteAction(_ sender: Any){
-        if let weather = weatherViewModel.weatherInfo {
-            _ = WeatherInfo.saveWeatherInfo(info: weather)
+        if let weather = weatherViewModel.weatherDetail {
+            WeatherInfo.storeWeatherInfo(weatherDetail: weather)
         }
     }
-    
 }
 
 extension WeatherViewController: WeatherSelectionProtocol {
     func citySelected(model: WeatherModel) {
         if ReachabilityTest.isConnectedToNetwork() {    // Check if internet is available...
-            self.getWeatherInfo(for: model.cityName ?? "", completion: {success in
+            self.getWeatherInfo(for: model.cityName, completion: {success in
                 if success {
                     self.markFavouriteAction(AnyClass.self) // Update the the information in local...
                 }
             })
         } else {
-            populateData(weather: model)
-            weatherViewModel.weatherInfo = model
+            populateData(weatherInfo: model)
+            weatherViewModel.weatherDetail = model
         }
     }
 }

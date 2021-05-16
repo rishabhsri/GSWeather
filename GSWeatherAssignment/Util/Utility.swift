@@ -2,7 +2,7 @@
 //  Utility.swift
 //  GSWeatherAssignment
 //
-//  Created by Rishabh on 02/04/21.
+//  Created by Rishabh on 14/05/21.
 //
 
 import UIKit
@@ -10,7 +10,7 @@ import SystemConfiguration
 
 class Utility {
     static func showAlert(message: String, on controller: UIViewController) {
-        let alert = UIAlertController.init(title: "", message: message, preferredStyle: UIAlertController.Style.alert)
+        let alert = UIAlertController(title: "", message: message, preferredStyle: UIAlertController.Style.alert)
         let dismissAction = UIAlertAction.init(title: "Ok", style: UIAlertAction.Style.cancel, handler: nil)
         alert.addAction(dismissAction)
         controller.present(alert, animated: true, completion: nil)

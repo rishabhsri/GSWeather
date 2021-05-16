@@ -12,16 +12,15 @@ class WeatherListViewModel {
     var weatherDataList = [WeatherModel]()
     
     func createDataSource() {
-        let weatherDataArray = WeatherInfo.fetchAllObjects()
-        if let objCount = weatherDataArray?.count, objCount > 0 {
-            weatherDataArray?.forEach({ (weatherObj) in
-                weatherDataList.append(WeatherModel.init(weatherInfo: weatherObj))
-            })
+        if let weatherDataArray = WeatherInfo.fetchAllObjects() {
+            weatherDataArray.forEach { (weatherInfo) in
+                weatherDataList.append(WeatherModel(weatherInfo: weatherInfo))
+            }
         }
     }
     
     func deleteWeather(for model: WeatherModel) {
-        WeatherInfo.deleteObject(city: model.cityName ?? "")
+        WeatherInfo.deleteObject(city: model.cityName)
         weatherDataList = weatherDataList.filter({ $0.cityName != model.cityName })
     }
 }
