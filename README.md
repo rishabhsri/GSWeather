@@ -1,15 +1,14 @@
 # GSWeatherAssignment
 
-Given by Goldman Sachs...
+Given by GS...
 
-This application allows to browse the weather information for any city.
+This application allows browsing the weather information for any city.
 
-After entering the name of the city, hit the "go" button of keyboard in order to fetch the current weather.
+After entering the name of the city, hit the "go" button on the keyboard in order to fetch the current weather.
 
-Details we shows are Temprature, Wind speed, Humidity, Visibility, Sunrise and Sunset
+Details we show are Temperature, Wind speed, Humidity, Visibility, Sunrise, and Sunset.
 
-You can also mark a destination/city as favorite so that in the future you can directly access that city.
-In Offline, You can still see the last updated data of a city marked as favourite.
+You can also mark a destination/city as a favorite so that in the future you can directly access that city.In Offline, You can still see the last updated data of a city marked as favorite.
 
-##### For fetching weather information, We used openweathermap.org's public weathe APIs...
-##### No third party library is used.
+##### For fetching weather information, We used openweathermap.org's public weather APIs...
+##### No third-party library is used.
